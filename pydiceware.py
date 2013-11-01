@@ -75,6 +75,13 @@ def parsopts():
 	args = parser.parse_args()
 
 	args.verb = sum(args.debug) if (args.debug) else 0
+	if (not args.fetch):
+		try:
+			args.wordlist = args.wordlist[0]
+		except:
+			parser.print_usage()
+			sys.stderr.write(parser.prog + ": error: wordlist required without --fetch\n")
+			sys.exit(1)
 
 	return (parser, args)
 
