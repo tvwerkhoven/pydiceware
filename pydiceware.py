@@ -194,12 +194,12 @@ def make_password(words, nwords=5, nchr=20, verb=0):
 	passwords = []
 
 	for i in range(nwords):
-		# Make random number between [0, MAXN] by taking a random number from
+		# Make random number between [0, MAXN) by taking a random number from
 		# the cryptographically secure source os.urandom(), then reject 
 		# numbers outside the requested range. This ensures homogeneous 
-		# spread through [0, MAXN]
-		r=MAXN+1
-		while (r>MAXN):
+		# spread through [0, MAXN)
+		r=MAXN
+		while (r>=MAXN):
 			r = sum(ord(c)*256**i for i,c in enumerate(os.urandom(NBITS)))
 		passwords.append(words[r])
 
