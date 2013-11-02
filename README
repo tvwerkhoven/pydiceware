@@ -4,7 +4,7 @@ pydiceware: Python Diceware(r) pass phrase generator
 About
 =====
 
-This script generates pass phrases according to the Diceware(r)[1] method. It uses os.urandom() for cryptographically secure random number generators and ensures homogeneous sampling of the word lists.
+This script generates pass phrases according to the Diceware(r)[1][2] method. It uses os.urandom() for cryptographically secure random number generators and ensures homogeneous sampling of the word lists.
 
 Upon loading a word list, it is first checked for integrity:
 
