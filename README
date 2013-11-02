@@ -1,0 +1,55 @@
+pydiceware: Python Diceware(r) pass phrase generator
+=================================================
+
+About
+=====
+
+This script generates pass phrases according to the Diceware(r)[1] method. It uses os.urandom() for cryptographically secure random number generators and ensures homogeneous sampling of the word lists.
+
+Upon loading a word list, it is first checked for integrity:
+
+1. Limit maximum word length (to ensure we can remember it)
+2. Check for duplicate words
+3. Check brute-force entropy of word list (i.e. the number of unique characters used, approximately weighted to their occurrence)
+
+For the last point, we check the spread of characters used in the word list. Since not all characters occur equally, this reduces the entropy of the naive log2(26) (for lower case alphabetic pass phrases). The script counts the occurrence of each character, and checks how many characters occur more frequently than the mean. This is not exactly correct, but should pick out really bad word lists.
+
+Pass phrase entropy
+-------------------
+
+When generating a password, the entropy is in principle log2(len(wordlist)) * #words. For Diceware(r) word lists, the word list length is 5**6 = 7776, such that the entropy of each word is log2(7776) = 12.9 bits. 
+
+For a lower case pass phrase consisting of only letters, the entropy is log2(#chars) * len(pass phrase), where #chars is the character space (N.B. read above).
+
+In the rare case that the pass phrase is particularly short, the character space is less than the word list space, i.e. 
+
+    log2(#chars) * len(pass phrase) < log2(len(wordlist)) * #words
+
+In such cases, the script re-generates a new password automatically.
+
+Word lists
+----------
+
+Word lists are not supplied with the script, although it can fetch scripts from the Diceware(r) homepage with --fetch. Some other sources for word lists:
+
+- https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/PG/2006/04/1-10000
+
+Usage
+=====
+
+    ./pydiceware --help
+
+Version history
+===============
+
+## 20131102
+- Initial release
+
+License
+=======
+
+Copyright 2013 Tim van Werkhoven (timvanwerkhoven@gmail.com).
+
+This file is licensed under the Creative Commons Attribution-Share Alike
+license versions 3.0 or higher, see
+http://creativecommons.org/licenses/by-sa/3.0/
