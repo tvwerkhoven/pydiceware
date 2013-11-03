@@ -4,7 +4,7 @@ pydiceware: Python Diceware(r) pass phrase generator
 About
 =====
 
-This script generates pass phrases according to the Diceware(r)[1][2] method. It uses os.urandom() for cryptographically secure random number generators and ensures homogeneous sampling of the word lists.
+This script generates pass phrases according to the Diceware(r)[1][2] method. It uses os.urandom()[3] for cryptographically secure random number generators and ensures homogeneous sampling of the word lists.
 
 Upon loading a word list, it is first checked for integrity:
 
@@ -17,6 +17,8 @@ For the last point, we check the spread of characters used in the word list. Sin
 Pass phrase entropy
 -------------------
 
+### Diceware(r) vs brute-force
+
 When generating a password, the entropy is in principle log2(len(wordlist)) * #words. For Diceware(r) word lists, the word list length is 5**6 = 7776, such that the entropy of each word is log2(7776) = 12.9 bits. 
 
 For a lower case pass phrase consisting of only letters, the entropy is log2(#chars) * len(pass phrase), where #chars is the character space (N.B. read above).
@@ -26,6 +28,28 @@ In the rare case that the pass phrase is particularly short, the character space
     log2(#chars) * len(pass phrase) < log2(len(wordlist)) * #words
 
 In such cases, the script re-generates a new password automatically.
+
+### Pass phrase knowledge
+
+When using spaces in the pass phrase (which is in general not recommended), this could be overheard due to the distinct sound of the space bar. In those cases, an adversary knows both how many words are used and how long these words are. In this case, the entropy is reduced to:
+
+    product(log2(#len(word)) for word in passphrase),
+
+i.e. the product of the log2 of the number of words of a certain length. If the word length used are isotropic, this means there are not 6**5 but only 6**5/7 words possible, reducing the entropy by a factor
+
+    log(6**5) / log(6**5/7) == 1.28
+
+where each word contributes
+
+    log2(6**5/7) = 10.1 bits
+
+instead of 
+
+    log2(6**5/7) = 12.9 bits
+
+such that a 6-word pass phrase would be 60.7 bits instead of 77.5 bits.
+
+Since spaces themselves only add 1 bit (spaces or not), from a security perspective these are better left out.
 
 Word lists
 ----------
@@ -59,5 +83,6 @@ References
 
 [1] "Diceware Passphrase Home" http://world.std.com/~reinhold/diceware.html
 [2] "Diceware -- Wikipedia, the free encyclopedia" http://en.wikipedia.org/wiki/Diceware
-[3] http://security.stackexchange.com/questions/2687/how-reliable-is-a-password-strength-checker/2693#2693
-[4] http://security.stackexchange.com/questions/6095/xkcd-936-short-complex-password-or-long-dictionary-passphrase
+[3] http://docs.python.org/2/library/os#os.urandom
+[4] http://security.stackexchange.com/questions/2687/how-reliable-is-a-password-strength-checker/2693#2693
+[5] http://security.stackexchange.com/questions/6095/xkcd-936-short-complex-password-or-long-dictionary-passphrase
