@@ -1,5 +1,5 @@
 pydiceware: Python Diceware(r) pass phrase generator
-=================================================
+====================================================
 
 About
 =====
@@ -51,6 +51,11 @@ such that a 6-word pass phrase would be 60.7 bits instead of 77.5 bits.
 
 Since spaces themselves only add 1 bit (spaces or not), from a security perspective these are better left out.
 
+Random numbers
+--------------
+
+Paramount to a secure pass phrase is a proper method to generate random numbers. Using dice is a safe solution to this as they are simple yet effective, and hardware or software random number generators might be subverted or weakened[6][7][8]. Therefore, the most secure way to generate pass phrases is printing out the full word list and using dice to choose the words. However, this script also checks the integrity of the word list, such that it provides additional protection against weakened word lists.
+
 Word lists
 ----------
 
@@ -65,6 +70,9 @@ Usage
 
 Version history
 ===============
+
+## 20131110
+- Extended README on RNGs
 
 ## 20131102
 - Initial release
@@ -83,6 +91,9 @@ References
 
 [1] "Diceware Passphrase Home" http://world.std.com/~reinhold/diceware.html
 [2] "Diceware -- Wikipedia, the free encyclopedia" http://en.wikipedia.org/wiki/Diceware
-[3] http://docs.python.org/2/library/os#os.urandom
-[4] http://security.stackexchange.com/questions/2687/how-reliable-is-a-password-strength-checker/2693#2693
-[5] http://security.stackexchange.com/questions/6095/xkcd-936-short-complex-password-or-long-dictionary-passphrase
+[3] "15.1. os — Miscellaneous operating system interfaces - Python v2.7.6 documentation" http://docs.python.org/2/library/os#os.urandom
+[4] "How reliable is a password strength checker?" http://security.stackexchange.com/questions/2687/how-reliable-is-a-password-strength-checker/2693#2693
+[5] "XKCD #936: Short complex password, or long dictionary passphrase?" http://security.stackexchange.com/questions/6095/xkcd-936-short-complex-password-or-long-dictionary-passphrase
+[6] "Random number generator attack -- Wikipedia, the free encyclopedia" https://en.wikipedia.org/wiki/Random_number_generator_attack
+[7] "Linux RNG May Be Insecure After All - Slashdot" http://it.slashdot.org/story/13/10/14/2318211/linux-rng-may-be-insecure-after-all
+[8] "Cryptanalytic Attacks on Pseudorandom Number Generators" https://www.schneier.com/paper-prngs.html
